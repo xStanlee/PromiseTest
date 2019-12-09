@@ -7,33 +7,75 @@
     <title>Asynchronous JavaScript</title>
 </head>
 <body>
-    <h1>Asynchronous JavaScript</h1>
+    <h1 style="color:rgb(8, 30, 95);font-size:46px;text-align:center;">Asynchronous JavaScript</h1>
+    <h2 id="date" style="color:royalblue;font-size:46px;text-align:center;margin-top:100px;"></h2>
+
+
     <script>
+
 
 
 function getWeather(woeid) {
 
-        let cors_api_host = 'cors-anywhere.herokuapp.com';
-        let api_use = `https://www.metaweather.com/api/location/${woeid}`; // ES6
-        let cors_api_url = 'https://' + cors_api_host + '/' + api_use; // ES5
+        const cors_api_host = 'cors-anywhere.herokuapp.com';
+        const api_use = `https://www.metaweather.com/api/location/${woeid}`; // ES6
+        const cors_api_url = `https://${cors_api_host}/${api_use}`; // ES6
 
         fetch(cors_api_url)
         .then(result => {
-            console.log(result);
-            return result.json();
+            // console.log(result);
+          return result.json();
         })
         .then(data => {
            let today = data.consolidated_weather[0]; 
-           console.log(data)
-           console.log( `${data.title} : is beautiful city and today air preasure is around ${today.air_pressure}`)
+         //  console.log(data)
+         //  console.log( `${data.title} : is beautiful city and today air preasure is around ${today.air_pressure}. The full-time in London right now is --- ${data.time}`)
         })
         .catch(error => {
-            console.log(error);
+         //   console.log(error);
         })
 }
 
-console.log(getWeather(44418));
+ let londonToday = getWeather(44418);
 
-    </script>
-</body>
+
+async function getWeatherAW(woeid){
+        
+    try {
+        const cors_api_host = 'cors-anywhere.herokuapp.com';
+        const api_use = `https://www.metaweather.com/api/location/${woeid}`; // ES6
+        const cors_api_url = `https://${cors_api_host}/${api_use}`; // ES6
+
+    const result = await fetch(cors_api_url);  // Check 1st error at variable cuz of syntax 
+    const data = await result.json();
+    let tommorow = data.consolidated_weather[1]; 
+    //console.log(data);
+    //console.log( `${data.title} : is beautiful city and tommorow air preasure is around ${tommorow.air_pressure}`);
+        
+    return data;
+   } catch(error) {
+
+        alert(error);
+    }
+}
+
+let franciscoTmrw_part = getWeatherAW(2487956);
+let franciscoTmrw;
+
+franciscoTmrw_part.then(data => {
+    franciscoTmrw = data.time;
+    console.log(franciscoTmrw);
+    let franciscoString = '';
+    let inputText = franciscoString +  franciscoTmrw;
+
+    document.getElementById("date").textContent = inputText;
+    return franciscoTmrw;
+});
+
+
+
+        </script>
+
+
+    </body>
 </html>

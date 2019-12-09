@@ -1,6 +1,6 @@
 # Promise
 
-Making AJAX calls with promise and fetch()'
+Making AJAX calls with promise and fetch() / async & await
 
 
 ## API
